@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cart</title>
+        <meta name="description" content="This is the description">
+        <!-- <link rel="stylesheet" href="./src/style.css" /> -->
+        <!-- <script type="text/javascript" src="./src/index.js"></script> -->
+        <script type="text/javascript" src="./dist/bundle.js"></script>
+    </head>
+    <body>
+        <section class="container content-section">
+            <hr/>
+            <div class="section-header">
+                <span class="itemText">All Items</span>
+                <span class="itemAdd"></span>
+            </div>
+            <hr/>
+            <div class="col-10">
+                <div id="cartData">
+                </div>
+            </div>
+        
+            <div class="col-2"><hr/>
+                <div class="cart-row">
+                    <span class="cart-item cart-header cart-column">Items [ <output class="itemsCount"></output> ]</span>
+                    <span class="cart-quantity cart-header cart-column">Qty</span>
+                    <span class="cart-price cart-header cart-column">Price</span>
+                </div><hr/>
+                <div class="cart-items">
+                </div>
+                <div class="cart-total">
+                    <div class="totalText">
+                        <strong class="cart-total-title">Total</strong>
+                    </div>
+                    <div>
+                        <div class="totalSection">
+                            <p>
+                                <span class="total-items">Items ( <span class="cartCountItems"></span> )</span>
+                                <span class="cartTotalRight cartTotalItems">$00.00</span>
+                            </p><br>
+                            <p>
+                                <span class="cartTotalLeft cart-total-items">Discount</span>
+                                <span class="cartTotalRight cartDiscountPrice">$00.00</span>
+                            </p>
+                            <p>
+                                <span class="cartTotalLeft cart-total-items">Type Discount</span>
+                                <span class="cartTotalRight cartTypeDiscountPrice">$00.00</span>
+                            </p>
+                        </div>
+                        <p class="orderTotal">
+                            <span class="cartTotalLeft cart-total-items">Order Total</span>
+                            <span class="cartTotalRight cart-total-price">$00.00</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
