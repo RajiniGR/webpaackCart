@@ -1,13 +1,13 @@
 $fontfamily: Arial, Helvetica, sans-serif;
 $bgcolor: #9e9e9ea1;
 $textcolor: #777;
-$stdfontsize: 20px;
-$fontsize: 25px;
+$stdfontsize: 14px;
+$fontsize: 16px;
 
 @font-face {
-   font-family: 'MyFont';
-   src:  url('./Zero Zero.woff2') format('woff2'),
-         url('./Zero Zero.woff') format('woff');
+   font-family: 'Open Sans';
+   src:  url('./fonts/opensans.woff2') format('woff2'),
+         url('./fonts/opensans.woff') format('woff');
    font-weight: 600;
    font-style: normal;
    font-size: $stdfontsize;
@@ -15,7 +15,7 @@ $fontsize: 25px;
 
 * {
     box-sizing: border-box;
-    font-family: 'MyFont';
+    font-family: 'Open Sans';
     color: $textcolor;
     font-size: $stdfontsize;
 }
