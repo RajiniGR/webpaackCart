@@ -19,6 +19,8 @@ function ready() {
         let input = quantityInputs[j]
         input.addEventListener('change', quantityChanged)
     }
+    document.getElementsByClassName('itemsCount')[0].innerText = 0;
+    document.getElementsByClassName('cartCountItems')[0].innerText = 0;
 
 }
 
@@ -56,7 +58,6 @@ function appendData(data) {
         button.addEventListener('click', addToCartClicked);
     }
 
-    document.getElementsByClassName('itemsCount')[0].innerText = 0;
 }
 
 function quantityChanged(event) {
@@ -106,9 +107,7 @@ function addItemToCart(title, price, imageSrc, discount) {
 		
     cartRow.innerHTML = cartRowContents;
     cartItems.append(cartRow);
-    
-    itemsCount +=  1;
-    document.getElementsByClassName('itemsCount')[0].innerText = itemsCount;
+	
     let itemClass = document.createElement('div');
     itemClass.classList.add('itemAdded');
     let cartItems1 = document.getElementsByClassName('itemAdd')[0];
@@ -177,6 +176,7 @@ function updateCartTotal() {
         total = withoutDiscount - discountPrice;
     }
     total = Math.round(total * 100) / 100;
+    document.getElementsByClassName('itemsCount')[0].innerText = cartRows.length;
     document.getElementsByClassName('cartCountItems')[0].innerText = cartRows.length;
     document.getElementsByClassName('cartTotalItems')[0].innerText = withoutDiscount;
     document.getElementsByClassName('cartDiscountPrice')[0].innerText = '-$' + discountPrice;
