@@ -166,16 +166,16 @@ const updateCartTotal = () => {
     let withoutDiscount = 0;
     for (let i of cartRows) {
         let cartRow = i;
-        let discountPriceElement = parseFloat(cartRow.getElementsByClassName('cart-discount')[0].innerText);
+        let discountPriceElement = cartRow.getElementsByClassName('cart-discount')[0].innerText;
         let quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0];
 
         let quantity = quantityElement.value;
-        withoutDiscount = withoutDiscount + (discountPriceElement * quantity);
+        withoutDiscount = withoutDiscount + (parseFloat(discountPriceElement) * quantity);
 
         let priceElement = cartRow.getElementsByClassName('cart-price')[0];        
         let price = parseFloat(priceElement.innerText.replace('$', ''));        
 
-        discountPrice += discountPriceElement - (price * quantity);
+        discountPrice += (parseFloat(discountPriceElement) * quantity) - (price * quantity);
         total = withoutDiscount - discountPrice;
     }
     total = Math.round(total * 100) / 100;
