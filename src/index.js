@@ -14,9 +14,9 @@ function ready() {
             appendData(result);
     }).catch(err => console.error(err));
 
-    let quantityInputs = document.getElementsByClassName('cart-quantity-input')
-    for (let j = 0; j < quantityInputs.length; j++) {
-        let input = quantityInputs[j]
+    let quantityInputs = document.getElementsByClassName('cart-quantity-input');
+    for(let j of quantityInputs){
+        const input = j;
         input.addEventListener('change', quantityChanged)
     }
     document.getElementsByClassName('itemsCount')[0].innerText = 0;
@@ -24,58 +24,59 @@ function ready() {
 
 }
 
-function removeCartItem(event) {
-    var buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.remove()
-    updateCartTotal()
+const removeCartItem = event=>{
+    let buttonClicked = event.target;
+    buttonClicked.parentElement.parentElement.remove();
+    updateCartTotal();
 }
 
-function appendData(data) {
-	let displayResources = document.querySelector("#cartData");
-	displayResources.textContent = "Loading data from JSON source...";
-	let output = '<div class="shop-items">';
-	let cartObj = data.items;
+const appendData = data => {
+    let displayResources = document.querySelector("#cartData");
+    displayResources.textContent = "Loading data from JSON source...";    
+    let cartObj = data.items;
+    /*let {name, image} = cartObj;
+    //let {display, actual} = data.items.price
+    console.log(name);*/
 
-	for (let p in cartObj) {
-		output += '<div class="shop-item">'+
-			'<div class="item-details">' +
-			'<span class="discountValue"><span class="discountAmt">' + cartObj[p].discount + '</span> &#37; off</span>' +
-			'<img class="shop-item-image" src="'+ cartObj[p].image + '"></div>' +
-			'<div class="shop-item-details">' +
-			'<span class="shop-item-price">'+			
-				'<p class="shop-item-title">'+cartObj[p].name+'</p>' +
-				'<span class="priceDetails"><span class="actualPrice">' + cartObj[p].price.display +'</span>' + '&nbsp; &#36;<span class="discountPrice">'+ 
-				cartObj[p].price.actual + '</span>' +
-				'</span><button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>'+
-			'</div></div>';
-	}
-	output += "</div>";
-	displayResources.innerHTML = output;
+    let output = '<div class="shop-items">';
+    for (let p in cartObj) {
+        output += '<div class="shop-item">'+
+            '<div class="item-details">' +
+            '<span class="discountValue"><span class="discountAmt">' + cartObj[p].discount + '</span> &#37; off</span>' +
+            '<img class="shop-item-image" src="'+ cartObj[p].image + '"></div>' +
+            '<div class="shop-item-details">' +
+            '<span class="shop-item-price">'+            
+                '<p class="shop-item-title">'+cartObj[p].name+'</p>' +
+                '<span class="priceDetails"><span class="actualPrice">' + cartObj[p].price.display +'</span>' + '&nbsp; &#36;<span class="discountPrice">'+ 
+                cartObj[p].price.actual + '</span>' +
+                '</span><button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>'+
+            '</div></div>';
+    }
+    output += "</div>";
+    displayResources.innerHTML = output;
 
-	let addToCartButtons = document.getElementsByClassName('shop-item-button');
-    for (let q = 0; q < addToCartButtons.length; q++) {
-        let button = addToCartButtons[q];
+    let addToCartButtons = document.getElementsByClassName('shop-item-button');
+    for (let q of addToCartButtons) {
+        let button = q;
         button.addEventListener('click', addToCartClicked);
     }
-
 }
 
-function quantityChanged(event) {
-    let input = event.target
-    if (isNaN(input.value) || input.value <= 0) {
-        input.value = 1
+const quantityChanged = event => {
+    const input = event.target
+    if (isNaN(input.value) || (input.value <= 0)) {
+        input.value = 1;
     }
     updateCartTotal()
 }
 
-let itemsCount = 0;
-function addToCartClicked(event) {
+const addToCartClicked = event => {
     let button = event.target;
     let shopItem = button.parentElement.parentElement.parentElement;
     let title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
     let price = shopItem.getElementsByClassName('discountPrice')[0].innerText;
-    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src;
-    var discount = shopItem.getElementsByClassName('actualPrice')[0].innerText;
+    let imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src;
+    let discount = shopItem.getElementsByClassName('actualPrice')[0].innerText;
     addItemToCart(title, price, imageSrc, discount);
     updateCartTotal();
 }
@@ -84,9 +85,15 @@ function addItemToCart(title, price, imageSrc, discount) {
     let cartRow = document.createElement('div');
     cartRow.classList.add('cart-row');
     let cartItems = document.getElementsByClassName('cart-items')[0]
-    let cartItemNames = cartItems.getElementsByClassName('cart-item-title')
-    for (let i = 0; i < cartItemNames.length; i++) {
-        if (cartItemNames[i].innerText == title) {
+    let cartItemNames = cartItems.getElementsByClassName('cart-item-title');
+
+    let itemClass = document.createElement('div');
+    itemClass.classList.add('itemAdded');
+    let cartItems1 = document.getElementsByClassName('itemAdd')[0];
+    cartItems1.innerHTML = '';
+
+    for (let i of cartItemNames) {
+        if (i.innerText == title) {
             alert('This item is already added to the cart');
             return false;
         }
@@ -95,23 +102,19 @@ function addItemToCart(title, price, imageSrc, discount) {
         <div class="cart-item cart-column">
             <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
             <span class="cart-item-title">${title}</span>
-			<img class="btn btn-danger" src="${Icon}">
+            <img class="btn btn-danger" src="${Icon}">
         </div>
         <div class="cart-quantity cart-column">
-			<button data-action="remove" id="minus" class="btn minus update-cart">-</button>
+            <button data-action="remove" id="minus" class="btn minus update-cart">-</button>
             <input class="cart-quantity-input" type="number" value="1">
             <button data-action="add" id="plus" class="btn add update-cart">+</button>
         </div>
         <span class="cart-price cart-column">$${price}</span>
         <span hidden class="cart-discount cart-column">${discount}</span>`
-		
+        
     cartRow.innerHTML = cartRowContents;
     cartItems.append(cartRow);
-	
-    let itemClass = document.createElement('div');
-    itemClass.classList.add('itemAdded');
-    let cartItems1 = document.getElementsByClassName('itemAdd')[0];
-    cartItems1.innerHTML = '';
+    
     let itemClassText = title + ' is added to cart';
     itemClass.innerHTML = itemClassText;
     cartItems1.append(itemClass);
@@ -137,32 +140,32 @@ function addItemToCart(title, price, imageSrc, discount) {
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
 }
 
-function minusCartInput(event){
-	let buttonClicked = event.target;
-	let currentInputBox = buttonClicked.nextElementSibling;
-    if (isNaN(currentInputBox.value) || currentInputBox.value <= 0) {
-        currentInputBox.value = 1;
+const minusCartInput = event => {
+    let buttonClicked = event.target;
+    let currentMinusInputBox = buttonClicked.nextElementSibling;
+    if (isNaN(currentMinusInputBox.value) || (currentMinusInputBox.value <= 1) ) {
+        currentMinusInputBox.value = 1;
     }else{
-		currentInputBox.value =  parseInt(currentInputBox.value) - 1;
-	}
-	updateCartTotal();
+        currentMinusInputBox.value =  parseInt(currentMinusInputBox.value) - 1;
+    }
+    updateCartTotal();
 }
 
-function addCartInput(event){
-	let buttonClicked = event.target;
-	let currentInputBox = buttonClicked.previousElementSibling;
-	currentInputBox.value =  parseInt(currentInputBox.value) + 1;
-	updateCartTotal();
+const addCartInput = event => {
+    let buttonClicked = event.target;
+    let currentAddInputBox = buttonClicked.previousElementSibling;
+    currentAddInputBox.value =  parseInt(currentAddInputBox.value) + 1;
+    updateCartTotal();
 }
 
-function updateCartTotal() {
+const updateCartTotal = () => {
     let cartItemContainer = document.getElementsByClassName('cart-items')[0]
     let cartRows = cartItemContainer.getElementsByClassName('cart-row')
     let total = 0;
     let discountPrice=0;
     let withoutDiscount = 0;
-    for (let i = 0; i < cartRows.length; i++) {
-        let cartRow = cartRows[i];
+    for (let i of cartRows) {
+        let cartRow = i;
         let discountPriceElement = parseFloat(cartRow.getElementsByClassName('cart-discount')[0].innerText);
         let quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0];
 
