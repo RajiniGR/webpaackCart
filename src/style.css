@@ -6,8 +6,8 @@ $fontsize: 16px;
 
 @font-face {
    font-family: 'Open Sans';
-   src:  url('./src/fonts/opensans.woff2') format('woff2'),
-         url('./src/fonts/opensans.woff') format('woff');
+   src:  url('./opensans.woff2') format('woff2'),
+         url('./opensans.woff') format('woff');
    font-weight: 600;
    font-style: normal;
    font-size: $stdfontsize;
