@@ -25,16 +25,17 @@ module.exports = {
         },
 
         {
-        test: /\.(eot|otf|woff|woff2|ttf)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[hash].[ext]',
-              outputPath: 'dist/'
+          test: /\.(eot|otf|woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                limit: 8000,
+                  name: '[name].[hash].[ext]',
+                  outputPath: 'dist/'
+              }
             }
-          }
-        ]
+          ]
       },
 
      ],
